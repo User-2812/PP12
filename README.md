@@ -93,7 +93,17 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **What steps are required to open an X11 window and receive events?**
+    Um ein X11 window zu öffnen, müssen wir zuerst eine verbindung mit dem X-Server herstellen. (Display *dpy = XOpenDisplay(NULL))
+    Daraufhin wird der Standard screen ermittelt. (int screen = DefaultScreen(dpy))
+    Ist dies geschehen, wird ein window mit den angegebenen Werten erstellt. (Window win = XCreatSimpleWindow(...))
+    Nun wird dem window angegeben, welche events es empfangen soll. (XSelectInput(dpy, win, ExposureMask | KeyPressMask))
+    Jetzt wird das window angezeigt und der Inhalt erstellt. (XMapWindow(dpy, win), (GC gc = XCreateGC(...))
+    Nun wird eine Schleife durchnaufen, die unsere Grafik solange anzeigt, bis diese unterbrochen wird.
+    Zum Schluss wird der Speicher wieder Freigegeben. (XFreeGC(...))
+
+        
 2. **How does the `Expose` event trigger your drawing code?**
+    In der Schleife wird geprüft, ob `e.type == Expose` ist. Ist dies der Fall, wird die Funktion XDrawRectangle aufgerufen und das Rechteck wird mit den vorgegebenen maßen abgebildet.
 
 ---
 
@@ -153,8 +163,14 @@ In this exercise you will:
 #### Reflection Questions
 
 1. **How does GTK’s signal-and-callback mechanism differ from X11’s event loop?**
+
+        
+
 2. **Why use `pkg-config` when compiling GTK applications?**
 
+    Pkg-config wird verwendet, um dem Linker die richtigen librarys für GTK zu nennen.
+
+ 
 ---
 
 **Remember:** Stop after **90 minutes** and record where you stopped.
